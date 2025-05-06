@@ -1,1 +1,1 @@
-DEV_GUILD = 922349610771546112
+DEV_GUILD = 363742902943350785 #Guild that commands gonna be added.
