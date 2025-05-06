@@ -45,8 +45,13 @@ bot = MyBot(command_prefix="$", intents=intents)
 
 @bot.event
 async def on_ready():
-    # Triggered when the bot is ready
+    # Set activity
+    activity = discord.Game(name="madwitch.net")
+    await bot.change_presence(status=discord.Status.online, activity=activity)
+
+    # Log and print
     logging.info(f"Bot is ready - Logged in as {bot.user} (ID: {bot.user.id})")
+    print("Bot is Running!")
     print(f"Bot logged in as {bot.user} (ID: {bot.user.id})")
 
 bot.run(bot_token)
