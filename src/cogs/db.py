@@ -1,6 +1,6 @@
 import sqlite3
 from datetime import datetime
-from zoneinfo import ZoneInfo  # Requer Python 3.9+
+from zoneinfo import ZoneInfo
  
 DB_PATH = "ratings.db"
 
