@@ -1,0 +1,6 @@
+__pycache__/
+logs/
+*.db
+.project
+*.mp3
+*.mp4
