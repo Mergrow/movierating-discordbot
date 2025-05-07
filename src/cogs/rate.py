@@ -74,7 +74,7 @@ class Rate(commands.Cog):
 
         # Criar embed da votação
         embed = discord.Embed(
-            title="🎬 Avaliação de Filme",
+            title="🎬 Avaliação do Filme",
             description=f"**Filme:** {movie}\nReaja com uma nota de 1️⃣ a 5️⃣!",
             color=discord.Color.blue()
         )
