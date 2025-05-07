@@ -120,13 +120,14 @@ class Rate(commands.Cog):
         average = sum(score for (_, score) in votes.values()) / len(votes)
         summary = "\n".join(f"<@{uid}> votou {score}." for uid, (_, score) in votes.items())
         result_text = (
-            f"✅ Votação encerrada {'por tempo' if timeout_expired else 'automaticamente'}!\n\n"
+            f"✅ Votação encerrada {'por tempo' if timeout_expired else ''}!\n\n"
             f"🎥 **Filme:** {movie}\n"
             f"👑 **Host:** {host_name}\n"
             f"📊 **Média das notas:** {average:.2f}\n\n{summary}"
         )
         if message:
             await message.reply(result_text)
+            await message.delete()
 
     @commands.Cog.listener()
     async def on_reaction_add(self, reaction, user):
