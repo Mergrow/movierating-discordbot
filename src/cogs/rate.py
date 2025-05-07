@@ -92,7 +92,7 @@ class Rate(commands.Cog):
         self.active_sessions[message.id] = {
             "movie": movie,
             "host": str(interaction.user),
-            "timeout_task": self.bot.loop.create_task(self.end_by_timeout(message.id, 60)),
+            "timeout_task": self.bot.loop.create_task(self.end_by_timeout(message.id, 300)),
             "message": message
         }
 
