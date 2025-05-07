@@ -86,7 +86,7 @@ class Rank(commands.Cog):
 
         # Enviar a mensagem e manter referência nela
         message = await interaction.channel.send(embed=embed, view=view)
-
+        await interaction.response.send_message("Gerando a lista com o ranking.", ephemeral=True)
         # Função para gerenciar o clique nos botões
         async def button_callback(interaction: discord.Interaction):
             nonlocal page
