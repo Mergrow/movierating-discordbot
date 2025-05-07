@@ -13,7 +13,7 @@ class Rate(commands.Cog):
         self.votes = {}
         self.active_sessions = {}
 
-    @app_commands.command(name="rate", description="Inicie uma votação para um filme com notas de 1 a 5.")
+    @app_commands.command(name="rate", description="Inicie uma votação para um filme com notas de 1 a 10.")
     @app_commands.describe(
         movie="Nome do filme para avaliar",
         participants="Mencione os usuários que poderão votar"
@@ -75,14 +75,14 @@ class Rate(commands.Cog):
         # Criar embed da votação
         embed = discord.Embed(
             title="🎬 Avaliação do Filme",
-            description=f"**Filme:** {movie}\nReaja com uma nota de 1️⃣ a 5️⃣!",
+            description=f"**Filme:** {movie}\nReaja com uma nota de 1️⃣ a 🔟!",
             color=discord.Color.blue()
         )
         embed.set_footer(text="Apenas usuários mencionados podem votar.")
 
         message = await interaction.channel.send(content=" ".join(u.mention for u in mentioned_users), embed=embed)
 
-        emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣']
+        emojis = ['1️⃣', '2️⃣', '3️⃣', '4️⃣', '5️⃣', '6️⃣', '7️⃣', '8️⃣', '9️⃣', '🔟']
         for emoji in emojis:
             await message.add_reaction(emoji)
 
@@ -148,6 +148,11 @@ class Rate(commands.Cog):
             '3️⃣': 3,
             '4️⃣': 4,
             '5️⃣': 5,
+            '6️⃣': 6,
+            '7️⃣': 7,
+            '8️⃣': 8,
+            '9️⃣': 9,
+            '🔟': 10,
         }
         rating = emoji_map.get(reaction.emoji)
         if rating is None:
