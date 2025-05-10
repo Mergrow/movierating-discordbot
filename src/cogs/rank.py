@@ -22,12 +22,13 @@ class Rank(commands.Cog):
         conn = sqlite3.connect(DB_PATH)
         c = conn.cursor()
 
+        # Ordenação corrigida
         if order_by == 'rating':
-            c.execute("SELECT movie, host, participants, average, date FROM ratings ORDER BY average ASC")
+            c.execute("SELECT movie, host, participants, average, date FROM ratings ORDER BY CAST(average AS REAL) DESC")
         elif order_by == 'date':
-            c.execute("SELECT movie, host, participants, average, date FROM ratings ORDER BY date DESC")
+            c.execute("SELECT movie, host, participants, average, date FROM ratings ORDER BY date(date) DESC")
         elif order_by == 'name':
-            c.execute("SELECT movie, host, participants, average, date FROM ratings ORDER BY movie ASC")
+            c.execute("SELECT movie, host, participants, average, date FROM ratings ORDER BY LOWER(movie) ASC")
 
         rows = c.fetchall()
         conn.close()
@@ -46,7 +47,10 @@ class Rank(commands.Cog):
 
         def create_embed(page):
             current_page_items = paginate(rows, page)
-            embed = discord.Embed(title="🎬 Ranking de Filmes", color=discord.Color.blue())
+            embed = discord.Embed(
+                title=f"🎬 Ranking de Filmes (ordenado por: {order_by})",
+                color=discord.Color.blue()
+            )
             for idx, (movie, host, participants_str, average, date) in enumerate(current_page_items, start=(page - 1) * 5 + 1):
                 participants = participants_str.split("; ")
                 participants_display = "\n".join(participants)
