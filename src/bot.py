@@ -5,6 +5,8 @@ import time
 import logging
 from datetime import datetime
 from cogs.variables import *
+import threading
+from cogs.page import app as flask_app
 
 # Ensure the logs directory exists
 os.makedirs("logs", exist_ok=True)
@@ -42,6 +44,15 @@ class MyBot(commands.Bot):
         print(f"[{time.strftime('%H:%M:%S')}] Slash commands synced to dev guild {DEV_GUILD}")
 
 bot = MyBot(command_prefix="$", intents=intents)
+
+def run_flask():
+    flask_app.run(host="0.0.0.0", port=5000, debug=False)
+
+flask_thread = threading.Thread(target=run_flask)
+flask_thread.daemon = True
+flask_thread.start()
+
+
 
 @bot.event
 async def on_ready():
