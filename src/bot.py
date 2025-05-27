@@ -57,7 +57,7 @@ flask_thread.start()
 @bot.event
 async def on_ready():
     # Set activity
-    activity = discord.Game(name="madwitch.net")
+    activity = discord.Game(name="lasmovies.madwit.ch")
     await bot.change_presence(status=discord.Status.online, activity=activity)
 
     # Log and print
