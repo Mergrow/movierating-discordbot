@@ -8,23 +8,26 @@ from cogs.variables import *
 import threading
 from cogs.page import app as flask_app
 
-# Ensure the logs directory exists
+# Ensure logs directory exists
 os.makedirs("logs", exist_ok=True)
 
 # Generate log file name based on today's date
 log_filename = datetime.now().strftime("logs/%Y-%m-%d.log")
 
-# Set up logging
+# Set up logging (file + console)
 logging.basicConfig(
-    filename=log_filename,
     level=logging.INFO,
     format="[{asctime}] [{levelname}] {message}",
     datefmt="%Y-%m-%d %H:%M:%S",
-    style="{"
+    style="{",
+    handlers=[
+        logging.FileHandler(log_filename, encoding="utf-8"),
+        logging.StreamHandler()
+    ]
 )
 
 # Get bot token from environment
-bot_token = os.environ.get('DISCORD_TOKEN')  
+bot_token = os.environ.get("DISCORD_TOKEN")
 
 intents = discord.Intents.all()
 intents.message_content = True
@@ -37,7 +40,7 @@ class MyBot(commands.Bot):
         await self.load_extension("cogs.rank")
         logging.info("Extensions loaded: misc, rate, rank")
 
-        # Sync the commands only to the dev guild
+        # Sync slash commands only to dev guild
         guild = discord.Object(id=DEV_GUILD)
         await self.tree.sync(guild=guild)
         logging.info(f"Slash commands synced to dev guild {DEV_GUILD}")
@@ -46,13 +49,10 @@ class MyBot(commands.Bot):
 bot = MyBot(command_prefix="$", intents=intents)
 
 def run_flask():
-    flask_app.run(host="0.0.0.0", port=5000, debug=False)
+    flask_app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)
 
-flask_thread = threading.Thread(target=run_flask)
-flask_thread.daemon = True
+flask_thread = threading.Thread(target=run_flask, daemon=True)
 flask_thread.start()
-
-
 
 @bot.event
 async def on_ready():
@@ -60,9 +60,8 @@ async def on_ready():
     activity = discord.Game(name="lasmovies.madwit.ch")
     await bot.change_presence(status=discord.Status.online, activity=activity)
 
-    # Log and print
+    # Log
     logging.info(f"Bot is ready - Logged in as {bot.user} (ID: {bot.user.id})")
-    print("Bot is Running!")
     print(f"Bot logged in as {bot.user} (ID: {bot.user.id})")
 
 bot.run(bot_token)
