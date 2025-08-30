@@ -49,6 +49,7 @@ class MyBot(commands.Bot):
 bot = MyBot(command_prefix="$", intents=intents)
 
 def run_flask():
+    logging.getLogger('werkzeug').disabled = True
     flask_app.run(host="0.0.0.0", port=5000, debug=False, use_reloader=False)
 
 flask_thread = threading.Thread(target=run_flask, daemon=True)
