@@ -64,5 +64,6 @@ async def on_ready():
     # Log
     logging.info(f"Bot is ready - Logged in as {bot.user} (ID: {bot.user.id})")
     print(f"Bot logged in as {bot.user} (ID: {bot.user.id})")
+    print("Bot is Running!")
 
 bot.run(bot_token)
